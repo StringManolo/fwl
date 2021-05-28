@@ -43,8 +43,7 @@ code `javascript
 const number = 10;
 alert(number);
 
-/* Hope you like */
-`,
+/* Hope you like */`,
 
 list `variables,predefined css,language specific functions,...`,
 
@@ -67,9 +66,7 @@ olist`Download the fwl.mjs module and import it in the file where you're going t
 code `javascript
 import fwl from "./fwl.mjs";
 fwl(global);
-documentType = "bbcode"; //"markdown" "html"
-
-`,
+documentType = "bbcode"; //"markdown" "html"`,
 
 p `This document is generated using node index.fwl.mjs, use it as an example/reference.`,
 

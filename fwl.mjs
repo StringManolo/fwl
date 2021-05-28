@@ -4,7 +4,7 @@ const flw = obj => {
     let str = "";
     for (let i in s) {
       if (!/REMOVETHISLINE/.test(s[i])) {
-        str += s[i] + "\n";
+        str += `${s[i]}\n`;
       }
     }
     console.log(str);
@@ -38,8 +38,8 @@ const flw = obj => {
   obj.p = s => {
     switch(obj.documentType) {
       case "html" : return `<p>${s}</p>`;
-      case "markdown" : return `${s}  \n`;
-      case "bbcode" : return `${s}\n`;
+      case "markdown" : return `  \n${s}  \n`;
+      case "bbcode" : return `\n${s}\n`;
     }
   }
 
@@ -55,7 +55,7 @@ const flw = obj => {
     switch(obj.documentType) {
       case "html" : return `<h1>${s}</h1>`;
       case "markdown" : return `# ${s}`;
-      case "bbcode" : return `[h1]${s}[/h1]`;
+      case "bbcode" : return `[size=18pt][b]${s}[/b][/size]\n`; //`[h1]${s}[/h1]`;
     }
   }
 
@@ -63,7 +63,7 @@ const flw = obj => {
     switch(obj.documentType) {
       case "html" : return `<h2>${s}</h2>`;
       case "markdown" : return `## ${s}`;
-      case "bbcode" : return `[h2]${s}[/h2]`;
+      case "bbcode" : return `[size=16pt][b]${s}[/b][/size]\n`; //`[h2]${s}[/h2]`;
     }
   }
 
@@ -71,7 +71,7 @@ const flw = obj => {
     switch(obj.documentType) {
       case "html" : return `<h3>${s}</h3>`;
       case "markdown" : return `### ${s}`;
-      case "bbcode" : return `[h3]${s}[/h3]`;
+      case "bbcode" : return `[size=15pt][b]${s}[/b][/size]\n`; //`[h3]${s}[/h3]`;
     }
   }
 
@@ -79,7 +79,7 @@ const flw = obj => {
     switch(obj.documentType) {
       case "html" : return `<h4>${s}</h4>`;
       case "markdown" : return `#### ${s}`;
-      case "bbcode" : return `[h4]${s}[/h4]`;
+      case "bbcode" : return `[size=13pt][b]${s}[/b][/size]\n`; //`[h4]${s}[/h4]`;
     }
   }
 
@@ -87,7 +87,7 @@ const flw = obj => {
     switch(obj.documentType) {
       case "html" : return `<h5>${s}</h5>`;
       case "markdown" : return `##### ${s}`;
-      case "bbcode" : return `[h5]${s}[/h5]`;
+      case "bbcode" : return `[size=11pt][b]${s}[/b][/size]`; //`[h5]${s}[/h5]`;
     }
   }
 
@@ -95,7 +95,7 @@ const flw = obj => {
     switch(obj.documentType) {
       case "html" : return `<h6>${s}</h6>`;
       case "markdown" : return `###### ${s}`;
-      case "bbcode" : return `[h6]${s}[/h6]`;
+      case "bbcode" : return `[size=9pt][b]${s}[/b][/size]`; //`[h6]${s}[/h6]`;
     }
   }
 
@@ -127,7 +127,7 @@ const flw = obj => {
     switch(obj.documentType) {
       case "html" : return `<img src="${s1}" alt="${s2}">`;
       case "markdown" : return `![${s2}](${s1})`;
-      case "bbcode" : return `[img alt="${s2}"]${s1}[/img]`;
+      case "bbcode" : return `[img alt=${s2}]${s1}[/img]`;
     }
   }
 
@@ -149,7 +149,7 @@ const flw = obj => {
     switch(obj.documentType) {
       case "html" : return `<pre><code lang="${s1}">${s2}</code></pre>`;
       case "markdown" : return "```" + s1 + "\n" + s2 + "\n```";
-      case "bbcode" : return `[code="${s1}"]${s2}[/code]`;
+      case "bbcode" : return `[code=${s1}]${s2}[/code]`;
     }
   }
 
@@ -165,7 +165,7 @@ const flw = obj => {
     switch(obj.documentType) {
       case "html" : return `<i>${s}</i>`;
       case "markdown" : return `_${s}_`;
-      case "bbcode" : return `[i]${s}[/i]`;_
+      case "bbcode" : return `[i]${s}[/i]`;
     }
   }
 
@@ -325,7 +325,8 @@ const flw = obj => {
           if (i == 0) {
             str += "[tr]";
             for (let j in aux[i]) {
-              str += `[th]${aux[i][j]}[/th]`;
+              //str += `[th]${aux[i][j]}[/th]`;
+              str += `[td]${aux[i][j]}[/td]`;
             }
             str += "[/tr]\n";
           } else {
