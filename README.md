@@ -1,3 +1,4 @@
+# FWL (Function Web Language)
 ### FWL is a simple "language" designed to build webpages and documents in html, markdown, bbcode...
 ## Write once, and generate documents in multiple formats
 [Developed by StringManolo](https://github.com/stringmanolo)
@@ -37,12 +38,10 @@ alert(number);
 
 ### How to use
 1. Download the fwl.mjs module and import it in the file where you're going to write the document and bind it to global object
-2. In case of node
-3.  call fwl(global)
-4. If you use a browser
-5.  call fwl(window)
-6. Set the document type to print
-7. Call create method and inside braces use the functions you need to generate the code.
+2. In case of node call fwl(global)
+3. If you use a browser call fwl(window)
+4. Set the document type to print
+5. Call create method and inside braces use the functions you need to generate the code.
 ```javascript
 import fwl from "./fwl.mjs";
 fwl(global);

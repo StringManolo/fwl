@@ -62,7 +62,7 @@ hr ``,
 
 h3 `How to use` ,
 
-olist`Download the fwl.mjs module and import it in the file where you're going to write the document and bind it to global object,In case of node, call fwl(global),If you use a browser, call fwl(window),Set the document type to print,Call create method and inside braces use the functions you need to generate the code.`,
+olist`Download the fwl.mjs module and import it in the file where you're going to write the document and bind it to global object,In case of node call fwl(global),If you use a browser call fwl(window),Set the document type to print,Call create method and inside braces use the functions you need to generate the code.`,
 
 code `javascript
 import fwl from "./fwl.mjs";
