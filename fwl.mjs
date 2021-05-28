@@ -1,5 +1,63 @@
-const flw = obj => {
+/**
+ * [fwl]{@link https://github.com/stringmanolo/fwl}
+ *
+ * @namespace fwl
+ * @version 0.0.1
+ * @author Manuel, StringManolo [manuelvarelacaldas@gmail.com]
+ * @copyright Manuel, StringManolo 2021
+ * @license MIT
+ */
+
+
+/**
+ * Fwl is a exported function that allows you to bind all the methods to an object. Ideally you bind it to global or window, but you can bind to your own object.
+ * @summary Bind the module methods to an object
+ * @param {object} obj - Object to attach methods to
+ * @example <caption>Usage of fwl.mjs</caption>
+ * import fwl from "./fwl.mjs";
+ * fwl(global);
+ *
+ * documentType = "html";
+ *
+ * const generate = () => create (
+ * html `<!DOCTYPE html>
+ * <html>
+ * <head>
+ * <meta charset="utf-8">`,
+ * title `FWL`,
+ * html `</head>
+ * <body>`,
+ * h1 `FWL (Function Web Language)`,
+ * h3 `FWL is a simple "language" designed to build webpages and documents in html, markdown, bbcode...`,
+ * h2 `Write once, and generate documents in multiple formats`,
+ * link `Developed by StringManolo https://github.com/stringmanolo`,
+ * style_default ``,
+ * html `</body>
+ * </html>` );
+ *
+ * console.log("Generated HTML:");
+ * documentType = "html";
+ * generate();
+ *
+ * console.log("Generated BBcode:");
+ * documentType = "bbcode";
+ * generate();
+ *
+ * console.log("Generated Markdown:");
+ * documentType = "markdown";
+ * generate();
+ */
+const fwl = obj => {
+  /**
+   * @summary Select type of document to generate 
+   * @example <caption>Available strings</caption>
+   * "obj.documentType = "html" | "markdown" | "bbcode";
+   */
   obj.documentType = "html";
+  /** 
+   * Print and return the generated code for the chosen document
+   * @param {...string} s - Strings to print
+   */
   obj.create = (...s) => {
     let str = "";
     for (let i in s) {
@@ -11,6 +69,7 @@ const flw = obj => {
     return str;
   }
 
+  /** Only add the string to the generated html */
   obj.html = s => {
     switch(obj.documentType) {
       case "html" : return s;
@@ -19,6 +78,7 @@ const flw = obj => {
     }
   }
 
+  /** html title tag */
   obj.title = s => {
     switch(obj.documentType) {
       case "html" : return `<title>${s}</title>`;
@@ -27,6 +87,7 @@ const flw = obj => {
     }
   }
 
+  /* plain text */
   obj.text = s => {
     switch(obj.documentType) {
       case "html" : return `<span>${s}</span>`;
@@ -35,6 +96,7 @@ const flw = obj => {
     }
   }
 
+  /** paragraph */
   obj.p = s => {
     switch(obj.documentType) {
       case "html" : return `<p>${s}</p>`;
@@ -43,6 +105,7 @@ const flw = obj => {
     }
   }
 
+  /** linebreak */
   obj.br = (s="") => {
     switch(obj.documentType) {
       case "html" : return `${s}<br />`;
@@ -51,6 +114,7 @@ const flw = obj => {
     }
   }
 
+  /** h1 */
   obj.h1 = s => {
     switch(obj.documentType) {
       case "html" : return `<h1>${s}</h1>`;
@@ -438,4 +502,4 @@ const replaceAll = (str, pattern, newStr) => {
   return str;
 }
 
-export default flw;
+export default fwl;
