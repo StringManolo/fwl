@@ -34,6 +34,24 @@ alert(number);
 
 fwl is fast[/quote]
 [hr]
+[h3]How to use[/h3]
+[list]
+[li]Download the fwl.mjs module and import it in the file where you're going to write the document and bind it to global object[/li]
+[li]In case of node[/li]
+[li] call fwl(global)[/li]
+[li]If you use a browser[/li]
+[li] call fwl(window)[/li]
+[li]Set the document type to print[/li]
+[li]Call create method and inside braces use the functions you need to generate the code.[/li]
+[/list]
+[code="javascript"]import fwl from "./fwl.mjs";
+fwl(global);
+documentType = "bbcode"; //"markdown" "html"
+
+[/code]
+This document is generated using node index.fwl.mjs, use it as an example/reference.
+
+Example of a table:
 [table]
 [tr][th]number[/th][th]in text[/th][/tr]
 [tr][td]1[/td][td]one[/td][/tr]

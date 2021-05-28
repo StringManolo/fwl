@@ -60,11 +60,27 @@ fwl is fast`,
 
 hr ``,
 
+h3 `How to use` ,
+
+olist`Download the fwl.mjs module and import it in the file where you're going to write the document and bind it to global object,In case of node, call fwl(global),If you use a browser, call fwl(window),Set the document type to print,Call create method and inside braces use the functions you need to generate the code.`,
+
+code `javascript
+import fwl from "./fwl.mjs";
+fwl(global);
+documentType = "bbcode"; //"markdown" "html"
+
+`,
+
+p `This document is generated using node index.fwl.mjs, use it as an example/reference.`,
+
+
+text `Example of a table:`,
+
 table `number | in text
 1 | one
 2 | two`,
 
-//style_tables ``,
+style_tables ``,
 
 p(copyright),
 

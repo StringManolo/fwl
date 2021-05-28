@@ -396,7 +396,8 @@ html {
   margin-bottom: 8px;
   padding: 3px;
   opacity: 0.9;
-  color: #f75;
+  color: #f76;
+  font-weight: 600;
   text-shadow: -1px 1px 0 0 hsl(20, 100%, 16%),
     -2px 2px 0 0 hsl(20, 100%, 16%),
     -3px 3px 0 0 hsl(20, 100%, 16%),

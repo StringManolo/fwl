@@ -39,11 +39,49 @@ alert(number);
 
 fwl is fast</blockquote>
 <hr>
+<h3>How to use</h3>
+<ol>
+<li>Download the fwl.mjs module and import it in the file where you're going to write the document and bind it to global object</li>
+<li>In case of node</li>
+<li> call fwl(global)</li>
+<li>If you use a browser</li>
+<li> call fwl(window)</li>
+<li>Set the document type to print</li>
+<li>Call create method and inside braces use the functions you need to generate the code.</li>
+</ol>
+<pre><code lang="javascript">import fwl from "./fwl.mjs";
+fwl(global);
+documentType = "bbcode"; //"markdown" "html"
+
+</code></pre>
+<p>This document is generated using node index.fwl.mjs, use it as an example/reference.</p>
+<span>Example of a table:</span>
 <table style='border:1px solid #555'>
 <tr><th>number</th><th>in text</th></tr>
 <tr><td>1</td><td>one</td></tr>
 <tr><td>2</td><td>two</td></tr>
 </table>
+<style>
+table {
+  margin-bottom: 24px;
+  border-spacing: 0;
+  border-bottom: 2px solid black;
+  border-top: 2px solid black;
+} table th {
+  padding: 3px 10px;
+  background-color: #ddd;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid black;
+} table td {
+  padding: 3px 10px;
+  border-top: none;
+  border-left: 1px solid black;
+  border-bottom: none;
+  border-right: 1px solid black;
+}
+</style>
 <p>© 2021</p>
 <style>
 html {
@@ -69,7 +107,8 @@ html {
   margin-bottom: 8px;
   padding: 3px;
   opacity: 0.9;
-  color: #f75;
+  color: #f76;
+  font-weight: 600;
   text-shadow: -1px 1px 0 0 hsl(20, 100%, 16%),
     -2px 2px 0 0 hsl(20, 100%, 16%),
     -3px 3px 0 0 hsl(20, 100%, 16%),
