@@ -6,7 +6,7 @@
 
 
 All markdown features like
-*bold*
+**bold**
 _italic_
 underline
  are available

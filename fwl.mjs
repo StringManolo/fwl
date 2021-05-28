@@ -156,7 +156,7 @@ const flw = obj => {
   obj.bold = s => {
     switch(obj.documentType) {
       case "html" : return `<b>${s}</b>`;
-      case "markdown" : return `*${s}*`;
+      case "markdown" : return `**${s}**`;
       case "bbcode" : return `[b]${s}[/b]`;
     } 
   }
