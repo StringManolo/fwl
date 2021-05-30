@@ -18,7 +18,7 @@ create(
 h1 `Example`,
 p `This is a paragraph`
 hr ``
-t(`This is a template using javascript variables ${new Date()}`)
+text(`This is a template using javascript variables ${new Date()}`)
 )
 */
 const fwl = obj => {
@@ -26,6 +26,9 @@ const fwl = obj => {
   /* property -> obj.documentType
   * summary -> Specify what document to make
   * values -> "html","markdown","bbcode"
+  * example -> obj.documentType = "html" // create outputs html
+obj.documentType = "markdown" // create outputs markdown instead
+obj.documentType = "bbcode" // create outputs bbcode instead
   */
   obj.documentType = "html";
 
@@ -33,6 +36,24 @@ const fwl = obj => {
   * summary -> Print and return the generated code for the chosen document
   * param -> (...s) -> String -> String/s to print
   * return -> str -> String -> All the strings
+  * example -> create (
+html `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">`,
+
+title `FWL`,
+
+html `</head>
+<body>`,
+
+h1 `FWL (Function Web Language)`,
+
+h3 `FWL is a simple "language" designed to build webpages and documents in html, markdown, bbcode...`,
+
+html `</body>
+</html>`
+);
   */
   obj.create = (...s) => {
     let str = "";
@@ -47,9 +68,26 @@ const fwl = obj => {
 
 
   /* method -> obj.html
-  * summary -> Only add the string to generated html
+  * summary -> Only add the string to generated html if HTML document.
   * param -> s -> String -> HTML code to include
   * return -> s -> String -> Html code
+  * example -> html `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+`
+const startingBodyTag = "<body>";
+const endingBodyTag = "</body>";
+
+create (
+html (startingBodyTag),
+h1 `Hello`,
+html (endingBodyTag)
+`);
+
+// This will generate only the h1 tag in markdown and bbcode
+// and will add the body tags if the document is html
   */
   obj.html = s => {
     switch(obj.documentType) {
@@ -63,6 +101,7 @@ const fwl = obj => {
   * summary -> Add title tag to generated html
   * param -> s -> String -> Document title
   * return -> code -> String -> String between title tags (html)
+  * example -> title `Documentation`
   */
   obj.title = s => {
     switch(obj.documentType) {
@@ -76,6 +115,7 @@ const fwl = obj => {
   * summary -> Add text to the document
   * param -> s -> String -> Text to add.
   * return -> s -> String -> Text code
+  * example -> text `This text will be shown in generated documents`
   */
   obj.text = s => {
     switch(obj.documentType) {
@@ -89,6 +129,7 @@ const fwl = obj => {
   * summary -> Add text in a paragraph to the document
   * param -> s -> String -> Text to insert
   * return -> s -> String -> Paragraph code
+  * example -> p `My text`
   */
   obj.p = s => {
     switch(obj.documentType) {
@@ -102,6 +143,7 @@ const fwl = obj => {
   * summary -> Add a linebreak
   * param -> s -> String -> Text to prepend the linebreak
   * return -> s -> String -> Linebreak code
+  * example -> br `This text is line break terminated`
   */
   obj.br = (s="") => {
     switch(obj.documentType) {
@@ -115,6 +157,7 @@ const fwl = obj => {
   * summary -> Add text as h1
   * param -> s -> String -> Heading text
   * return -> s -> String -> Heading code
+  * example -> h1 `Documentation`
   */
   obj.h1 = s => {
     switch(obj.documentType) {
@@ -128,6 +171,7 @@ const fwl = obj => {
   * summary -> Add text as h2
   * param -> s -> String -> Heading text
   * return -> s -> String -> Heading code
+  * example -> h2 `Articles`
   */
   obj.h2 = s => {
     switch(obj.documentType) {
@@ -141,6 +185,7 @@ const fwl = obj => {
   * summary -> Add text as h1
   * param -> s -> String -> Heading text
   * return -> s -> String -> Heading code
+  * example -> h3 `Article Title`
   */
   obj.h3 = s => {
     switch(obj.documentType) {
@@ -154,6 +199,7 @@ const fwl = obj => {
   * summary -> Add text as h1
   * param -> s -> String -> Heading text
   * return -> s -> String -> Heading code
+  * example -> h4 `Article Content Title`
   */
   obj.h4 = s => {
     switch(obj.documentType) {
@@ -167,6 +213,7 @@ const fwl = obj => {
   * summary -> Add text as h1
   * param -> s -> String -> Heading text
   * return -> s -> String -> Heading code
+  * example -> h5 `Part of the article`
   */
   obj.h5 = s => {
     switch(obj.documentType) {
@@ -180,6 +227,7 @@ const fwl = obj => {
   * summary -> Add text as h1
   * param -> s -> String -> Heading text
   * return -> s -> String -> Heading code
+  * example -> h6 `Small title`
   */
   obj.h6 = s => {
     switch(obj.documentType) {
@@ -193,6 +241,7 @@ const fwl = obj => {
   * summary -> Create a clickable link
   * param -> s -> String -> Link text + space + url
   * return -> s -> String -> Clickable link code
+  * example -> link `StringManolo Github Account Link https://github.com/StringManolo`
   */
   obj.link = s => {
     let s1, s2;
@@ -214,6 +263,7 @@ const fwl = obj => {
   * summary -> Create a image
   * param -> s -> String -> Alt text + space + url
   * return -> s -> String -> Image code
+  * example -> image `google favicon https://google.com/favicon.ico`
   */
   obj.image = s => {
     let s1, s2;
@@ -235,6 +285,12 @@ const fwl = obj => {
   * summary -> Create a highlighted code block
   * param -> s -> String -> Code. First line is only the language name
   * return -> s -> String -> Code block.
+  * example -> code `#include <iostream>
+
+int main() {
+  std::cout << "Hello World!" << std::endl;
+  return 0;
+}`
   */
   obj.code = s => {
     let s1, s2;
@@ -255,7 +311,7 @@ const fwl = obj => {
       }
     }
     switch(obj.documentType) {
-      case "html" : return `<pre><code lang="${s1}">${s2}</code></pre>`;
+      case "html" : return `<pre><code lang="${s1}">${htmlEntities(s2)}</code></pre>`;
       case "markdown" : return "```" + s1 + "\n" + s2 + "\n```";
       case "bbcode" : return `[code=${s1}]${s2}[/code]`;
     }
@@ -265,6 +321,7 @@ const fwl = obj => {
   * summary -> Make text bold
   * param -> s -> String -> Text
   * return -> s -> String -> Bold text
+  * example -> bold `important`;
   */
   obj.bold = s => {
     switch(obj.documentType) {
@@ -278,6 +335,7 @@ const fwl = obj => {
   * summary -> Make text italic
   * param -> s -> String -> Text
   * return -> s -> String -> Italized text
+  * example -> italic `cool`
   */
   obj.italic = s => {
     switch(obj.documentType) {
@@ -291,6 +349,7 @@ const fwl = obj => {
   * summary -> Underline the text
   * param -> s -> String -> Text
   * return -> s -> String -> Underlined text (markdown returns normal text)
+  * example -> underline `underlined text`
   */
   obj.underline = s => {
     switch(obj.documentType) {
@@ -304,6 +363,7 @@ const fwl = obj => {
   * summary -> Create a dotted list of items
   * param -> s -> String -> Comma separated list of items
   * return -> s -> String -> List code
+  * example -> list `car,bike,plane,truck,bus`
   */
   obj.list = s => {
     /* TODO escapedcomma not working as intended */
@@ -345,6 +405,7 @@ const fwl = obj => {
   * summary -> Create a numeric list of items
   * param -> s -> String -> Comma separated list of items
   * return -> s -> String -> List code
+  * example -> olist `Press the button,Wait 5 seconds,Press the button again,done`
   */
   obj.olist = s => {
     let aux = replaceAll(s[0], "\\\\,", "ESCAPEDCOMMA").split(",");
@@ -385,6 +446,7 @@ const fwl = obj => {
   * summary -> Add a horizontal line separator
   * param -> ()
   * return -> s -> String -> Horizontal separator code
+  * example -> hr ``
   */
   obj.hr = () => {
     switch(obj.documentType) {
@@ -398,6 +460,7 @@ const fwl = obj => {
   * summary -> Create a quoted block
   * param -> s -> String -> Text block
   * return -> s -> String -> Quoted block
+  * example -> quote `"This text is being quoted"`
   */
   obj.quote = s => {
     let aux = "";
@@ -420,6 +483,9 @@ const fwl = obj => {
   * summary -> Create a table
   * param -> s -> String -> | separated list
   * return -> s -> String -> Table code
+  * example -> table `item | price
+bag | 12€
+shoes | 3€`
   */
   obj.table = s => {
     s = s[0].split("\n");
@@ -495,6 +561,7 @@ const fwl = obj => {
   * summary -> Add tables css if generating a html document
   * param -> ()
   * return -> s -> String -> CSS style code
+  * example -> style_tables ``
   */
   obj.style_tables = () => {
     switch(obj.documentType) {
@@ -528,6 +595,7 @@ table {
   * summary -> Add document css if generating a html document
   * param -> ()
   * return -> s -> String -> CSS style code
+  * example -> style_default``
   */
   obj.style_default = () => {
     switch(obj.documentType) {
@@ -538,14 +606,11 @@ html {
   height: 100%;
   text-align: middle;
   text-size-adjust: none; /* Fix Android Big Text */
-  text-rendering: optimizeLegibility; /* Improve text */
-  margin-bottom: 4px; /* Some Android screens cover bottom viewport */
   touch-action: manipulation; /* Disable double tap zoom on touch devices to allow fast touch actions */
 } body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 12px;
+  padding-bottom: 16px; /* Some Android screens cover bottom viewport */
+  background-color: #eee;
+  color: #555;
 } code {
   display: block;
   color: #ccc;
@@ -553,16 +618,14 @@ html {
   white-space: pre;
   overflow: auto;
   margin-bottom: 8px;
-  padding: 3px;
+  padding: 10px;
   opacity: 0.9;
-  color: #f76;
+  color: #f82;
+  background-color: #222;
   font-weight: 600;
-  text-shadow: -1px 1px 0 0 hsl(20, 100%, 16%),
-    -2px 2px 0 0 hsl(20, 100%, 16%),
-    -3px 3px 0 0 hsl(20, 100%, 16%),
-    -4px 4px 0 0 hsl(20, 100%, 16%),
-    -5px 5px 0 0 hsl(20, 100%, 16%),
-    -6px 6px 0 0 hsl(20, 100%, 16%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  border: 1px solid black;
 } blockquote {
   background-color: #eee;
   color: #333;
@@ -578,7 +641,11 @@ html {
   padding: 3px 10px;
   background-color: #ddd;                                                border-top: none;                                                      border-left: none;
   border-right: none;                                                    border-bottom: 1px solid black;
-}
+} p {
+  margin: 0;
+} h5 {
+  margin: 18px 0 -14px 0;
+} 
 
 </style>`;
       case "markdown" : return "REMOVETHISLINE";
@@ -594,6 +661,7 @@ html {
 * param -> pattern -> String -> Text (coverted to regular expression) to replace
 * param -> newStr -> String -> New text to replaced findings for
 * return -> s -> String -> Text with all ocurrences replaced
+* example -> replaceAll("hello Manolo, hello", "hello", "bye");
 */
 const replaceAll = (str, pattern, newStr) => {
   const reg = new RegExp(pattern, "g");
@@ -601,6 +669,18 @@ const replaceAll = (str, pattern, newStr) => {
     str = str.replace(reg, newStr);
   }
   return str;
+}
+
+/* function -> htmlEntities
+* summary -> Convert all characters to HTML entities to avoid text being interpretated as code
+* param -> s -> String -> Code to covert to HTML entities
+* return -> a -> String -> HTML entities
+* example -> htmlEntities("My favourite tag is <iframe src='javascript:alert(1337)'></iframe>");
+*/
+const htmlEntities = s => {
+  const r = "replace";
+  const a = s[r](/ /g,"&#32;")[r](/!/g,"&#33;")[r](/"/g,"&#34;")[r](/%/g,"&#37;")[r](/'/g,"&#39;")[r](/\(/g,"&#40;")[r](/\)/g,"&#41;")[r](/</g,"&#60;")[r](/>/g,"&#62;")[r](/`/g,"&#96;")[r](/a/g,"&#97;")[r](/A/g,"&#65;")[r](/e/g,"&#101;")[r](/E/g,"&#69;")[r](/i/g,"&#105;")[r](/I/g,"&#73;")[r](/o/g,"&#111;")[r](/O/g,"&#79;")[r](/u/g,"&#117;")[r](/U/g,"&#85;")[r](/{/g,"&#123;")[r](/}/g,"&#125;")[r](/‘/g,"&#8216;")[r](/’/g,"&#8217")[r](/‚/g,"&#8218;")[r](/“/g,"&#8220;")[r](/”/g,"&#8221;")[r](/„/g,"&#8222;")[r](/′/g,"&#8242;")[r](/″/g,"&#8244;")[r](/‹/g,"&#8249;")[r](/›/g,"&#8250;")[r](/s/g,"&#115;")[r](/S/g,"&#83;")[r](/\./g,"&#46;");
+  return a;
 }
 
 export default fwl;
